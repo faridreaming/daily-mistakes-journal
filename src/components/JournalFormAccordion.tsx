@@ -10,7 +10,7 @@ import JournalForm from '@/components/JournalForm'
 function JournalFormAccordion() {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
-      <AccordionItem value="item-1" className="overflow-visible">
+      <AccordionItem value="item-1">
         <AccordionTrigger className="cursor-pointer">
           <div className="flex items-center gap-2">
             <PlusIcon className="size-4" />

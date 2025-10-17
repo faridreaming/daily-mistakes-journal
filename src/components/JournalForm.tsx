@@ -6,12 +6,12 @@ import {
   FieldSet,
 } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
-
 import type { formField } from '@/types/formFields.types'
+import { Button } from './ui/button'
 
 type JournalFormProps = {
-  isReadOnly: boolean
-  readOnlyFormFields: formField[]
+  isReadOnly?: boolean
+  readOnlyFormFields?: formField[]
 }
 
 function JournalForm({
@@ -62,18 +62,19 @@ function JournalForm({
               {index + 1}. {field.label}
             </FieldLabel>
             <FieldDescription>{field.description}</FieldDescription>
-            <div className="px-2">
-              <Textarea
-                id={field.name}
-                autoComplete="off"
-                placeholder="Write here..."
-                className="placeholder:text-xs"
-                value={'value' in field ? field.value : undefined}
-                readOnly={isReadOnly}
-              />
-            </div>
+            <Textarea
+              id={field.name}
+              autoComplete="off"
+              placeholder="Write here..."
+              className="placeholder:text-xs"
+              value={'value' in field ? field.value : undefined}
+              readOnly={isReadOnly}
+            />
           </Field>
         ))}
+        <Field orientation="horizontal">
+          <Button type="submit">Submit</Button>
+        </Field>
       </FieldGroup>
     </FieldSet>
   )

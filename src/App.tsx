@@ -1,9 +1,17 @@
 import JournalFormAccordion from '@/components/JournalFormAccordion'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from './components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import JournalForm from '@/components/JournalForm'
 import { readOnlyFormFields } from '@/data/readOnlyFormFields.data'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 function App() {
   return (
@@ -34,6 +42,14 @@ function App() {
               <Button className="cursor-pointer mt-2">See Example</Button>
             </DialogTrigger>
             <DialogContent onOpenAutoFocus={(e) => e.preventDefault()}>
+              <VisuallyHidden>
+                <DialogHeader>
+                  <DialogTitle>Example</DialogTitle>
+                  <DialogDescription>
+                    This is an example of the mistakes journal.
+                  </DialogDescription>
+                </DialogHeader>
+              </VisuallyHidden>
               <JournalForm
                 isReadOnly={true}
                 readOnlyFormFields={readOnlyFormFields}
