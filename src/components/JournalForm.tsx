@@ -8,6 +8,7 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import type { formField } from '@/types/formFields.types'
 import { Button } from './ui/button'
+import { cn } from '@/lib/utils'
 
 type JournalFormProps = {
   isReadOnly?: boolean
@@ -66,7 +67,10 @@ function JournalForm({
               id={field.name}
               autoComplete="off"
               placeholder="Write here..."
-              className="placeholder:text-xs"
+              className={cn(
+                'placeholder:text-xs',
+                isReadOnly && 'pointer-events-none'
+              )}
               value={'value' in field ? field.value : undefined}
               readOnly={isReadOnly}
             />
