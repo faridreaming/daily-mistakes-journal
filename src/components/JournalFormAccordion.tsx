@@ -17,7 +17,7 @@ function JournalFormAccordion() {
             Add a new journal entry
           </div>
         </AccordionTrigger>
-        <AccordionContent>
+        <AccordionContent className="m-1">
           <JournalForm />
         </AccordionContent>
       </AccordionItem>
