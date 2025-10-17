@@ -26,19 +26,21 @@ function App() {
         <AlertDescription>
           {/* App description */}
           <p>
-            Every day before you go to bed, click the “Mistakes Journal” button
-            below and fill in the answers for each of the questions.
+            Every night before you go to bed, take a few quiet minutes to open
+            your Mistakes Journal and gently reflect on your day.
           </p>
           <p>
-            Doing this will make you aware of the mistakes you are repeatedly
-            making and find ways to avoid them.
+            This is not about blaming yourself. It is about understanding your
+            patterns, what led to them, and how you can respond better next
+            time.
           </p>
           <p>
-            By doing this consistently for the next <b>30 days</b>, you’ll start
-            noticing the patterns in your behavior, gaining clarity on your
-            triggers, and finding practical ways to avoid making the mistakes
-            that are holding you back from achieving your dream life.
+            By doing this consistently for the next <b>30 days</b>, you will
+            start to notice small shifts in your awareness, recognize your
+            triggers with kindness, and discover practical ways to grow into the
+            person you want to become.
           </p>
+
           <Dialog>
             <DialogTrigger asChild>
               <Button className="cursor-pointer mt-2">

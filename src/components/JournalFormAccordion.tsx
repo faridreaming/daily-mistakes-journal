@@ -11,7 +11,7 @@ function JournalFormAccordion() {
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
-        <AccordionTrigger className="cursor-pointer">
+        <AccordionTrigger className="cursor-pointer mb-4">
           <div className="flex items-center gap-2">
             <PlusIcon className="size-4" />
             Add a new journal entry

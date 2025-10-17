@@ -9,6 +9,7 @@ import { Textarea } from '@/components/ui/textarea'
 import type { formField } from '@/types/formFields.types'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
+import { BookPlusIcon } from 'lucide-react'
 
 type JournalFormProps = {
   isReadOnly?: boolean
@@ -72,13 +73,16 @@ function JournalForm({
                 isReadOnly && 'pointer-events-none'
               )}
               value={'value' in field ? field.value : undefined}
+              tabIndex={isReadOnly ? -1 : 0}
               readOnly={isReadOnly}
             />
           </Field>
         ))}
         {!isReadOnly && (
           <Field orientation="horizontal">
-            <Button type="submit">Submit</Button>
+            <Button type="submit">
+              <BookPlusIcon className="size-4" /> Add New Entry
+            </Button>
           </Field>
         )}
       </FieldGroup>
