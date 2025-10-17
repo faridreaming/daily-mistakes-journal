@@ -72,9 +72,11 @@ function JournalForm({
             />
           </Field>
         ))}
-        <Field orientation="horizontal">
-          <Button type="submit">Submit</Button>
-        </Field>
+        {!isReadOnly && (
+          <Field orientation="horizontal">
+            <Button type="submit">Submit</Button>
+          </Field>
+        )}
       </FieldGroup>
     </FieldSet>
   )
