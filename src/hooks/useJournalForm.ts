@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -12,7 +13,7 @@ const formSchema = z.object({
 
 export type FormValues = z.infer<typeof formSchema>
 
-export function useJournalForm() {
+export function useJournalForm(externalForm?: UseFormReturn<FormValues>) {
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,13 +29,13 @@ export function useJournalForm() {
     console.log(data)
   }
 
-  const handleSubmit = form.handleSubmit(onSubmit)
+  const handleSubmit = (externalForm || form).handleSubmit(onSubmit)
 
   return {
-    form,
+    form: externalForm || form,
     onSubmit: handleSubmit,
-    isSubmitting: form.formState.isSubmitting,
-    isValid: form.formState.isValid,
-    errors: form.formState.errors,
+    isSubmitting: (externalForm || form).formState.isSubmitting,
+    isValid: (externalForm || form).formState.isValid,
+    errors: (externalForm || form).formState.errors,
   }
 }

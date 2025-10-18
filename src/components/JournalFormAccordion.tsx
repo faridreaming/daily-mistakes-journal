@@ -6,8 +6,11 @@ import {
 } from '@/components/ui/accordion'
 import { PlusIcon } from 'lucide-react'
 import JournalForm from '@/components/JournalForm'
+import { useJournalForm } from '@/hooks/useJournalForm'
 
 function JournalFormAccordion() {
+  const { form } = useJournalForm()
+
   return (
     <Accordion type="single" collapsible defaultValue="item-1">
       <AccordionItem value="item-1">
@@ -18,7 +21,7 @@ function JournalFormAccordion() {
           </div>
         </AccordionTrigger>
         <AccordionContent className="m-1">
-          <JournalForm />
+          <JournalForm externalForm={form} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

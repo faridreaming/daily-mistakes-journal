@@ -19,12 +19,13 @@ import type { FormValues } from '@/hooks/useJournalForm'
 function JournalForm({
   isReadOnly = false,
   readOnlyFormFields = [],
+  externalForm,
 }: JournalFormProps) {
   const finalFormFields: FormField[] = isReadOnly
     ? readOnlyFormFields
     : formFields
 
-  const { form, onSubmit, isSubmitting } = useJournalForm()
+  const { form, onSubmit, isSubmitting } = useJournalForm(externalForm)
 
   return (
     <form onSubmit={onSubmit}>
