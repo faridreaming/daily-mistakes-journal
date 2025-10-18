@@ -3,90 +3,89 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-  FieldSet,
+  FieldError,
 } from '@/components/ui/field'
 import { Textarea } from '@/components/ui/textarea'
-import type { formField } from '@/types/formFields.types'
+import type { FormField } from '@/types/formFields.types'
 import { Button } from './ui/button'
 import { cn } from '@/lib/utils'
 import { BookPlusIcon } from 'lucide-react'
-
-type JournalFormProps = {
-  isReadOnly?: boolean
-  readOnlyFormFields?: formField[]
-}
+import { formFields } from '@/data/formFields.data'
+import { Controller } from 'react-hook-form'
+import { useJournalForm } from '@/hooks/useJournalForm'
+import type { JournalFormProps } from '@/types/journalFormProps.types'
+import type { FormValues } from '@/hooks/useJournalForm'
 
 function JournalForm({
   isReadOnly = false,
   readOnlyFormFields = [],
 }: JournalFormProps) {
-  const formFields: formField[] = [
-    {
-      name: 'mistakes',
-      label: 'Today’s Mistakes',
-      description:
-        'List each mistake on its own line. Be specific and observable (what exactly happened?)',
-    },
-    {
-      name: 'triggers',
-      label: 'Triggers & Root Causes',
-      description:
-        'What sparked each mistake? Note situation, emotion, cue, people, time, or thought pattern.',
-    },
-    {
-      name: 'effects',
-      label: 'Impact on My Day',
-      description:
-        'How did the mistakes affect mood, time, results, or relationships? Quantify if you can.',
-    },
-    {
-      name: 'three_months',
-      label: 'If This Continues for 3 Months…',
-      description:
-        'Project the consequences if repeated daily—health, grades/work, money, habits, or relationships.',
-    },
-    {
-      name: 'tomorrow_steps',
-      label: 'Plan for Tomorrow (Prevention Steps)',
-      description:
-        'Concrete, tiny actions with timing. Use “if–then” plans and environment tweaks.',
-    },
-  ]
+  const finalFormFields: FormField[] = isReadOnly
+    ? readOnlyFormFields
+    : formFields
 
-  const finalFormFields = isReadOnly ? readOnlyFormFields : formFields
+  const { form, onSubmit, isSubmitting } = useJournalForm()
 
   return (
-    <FieldSet>
+    <form onSubmit={onSubmit}>
       <FieldGroup>
         {finalFormFields.map((field, index) => (
-          <Field key={field.name}>
-            <FieldLabel htmlFor={field.name}>
-              {index + 1}. {field.label}
-            </FieldLabel>
-            <FieldDescription>{field.description}</FieldDescription>
-            <Textarea
-              id={field.name}
-              autoComplete="off"
-              placeholder="Write here..."
-              className={cn(
-                'placeholder:text-xs',
-                isReadOnly && 'pointer-events-none'
-              )}
-              value={'value' in field ? field.value : undefined}
-              tabIndex={isReadOnly ? -1 : 0}
-              readOnly={isReadOnly}
-            />
-          </Field>
+          <Controller
+            name={field.name as keyof FormValues}
+            key={field.name}
+            control={form.control}
+            render={({ field: formField, fieldState }) => {
+              const currentField: FormField | undefined = finalFormFields.find(
+                (f) => f.name === formField.name
+              )
+              return (
+                <Field data-invalid={fieldState.invalid}>
+                  <FieldLabel htmlFor={formField.name}>
+                    {index + 1}. {currentField?.label}
+                  </FieldLabel>
+                  <FieldDescription>
+                    {currentField?.description}
+                  </FieldDescription>
+                  <Textarea
+                    id={formField.name}
+                    autoComplete="off"
+                    placeholder="Write here..."
+                    aria-invalid={fieldState.invalid}
+                    className={cn(
+                      'placeholder:text-xs',
+                      isReadOnly && 'pointer-events-none'
+                    )}
+                    value={
+                      isReadOnly && currentField && 'value' in currentField
+                        ? currentField.value
+                        : formField.value || ''
+                    }
+                    onChange={formField.onChange}
+                    onBlur={formField.onBlur}
+                    tabIndex={isReadOnly ? -1 : 0}
+                    readOnly={isReadOnly}
+                  />
+                  {fieldState.invalid && (
+                    <FieldError errors={[fieldState.error]} />
+                  )}
+                </Field>
+              )
+            }}
+          />
         ))}
         {!isReadOnly && (
           <Field orientation="horizontal">
-            <Button type="submit">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="cursor-pointer"
+            >
               <BookPlusIcon className="size-4" /> Add New Entry
             </Button>
           </Field>
         )}
       </FieldGroup>
-    </FieldSet>
+    </form>
   )
 }
 
