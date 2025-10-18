@@ -1,4 +1,4 @@
-export type formField =
+export type FormField =
   {
     name: string
     label: string
