@@ -25,7 +25,10 @@ function JournalForm({
     ? readOnlyFormFields
     : formFields
 
-  const { form, onSubmit, isSubmitting } = useJournalForm(externalForm)
+  const { form, onSubmit, isSubmitting } = useJournalForm(
+    externalForm,
+    isReadOnly
+  )
 
   return (
     <form onSubmit={onSubmit}>
