@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { nanoid } from 'nanoid/non-secure'
 import { useEffect, useCallback, useRef } from 'react'
+import type { JournalData } from '@/types/journalData.types'
 
 const formSchema = z.object({
   mistakes: z.string().trim().nonempty('Mistakes are required'),
@@ -14,13 +15,6 @@ const formSchema = z.object({
 })
 
 export type FormValues = z.infer<typeof formSchema>
-
-type JournalData = {
-  id: string
-  createdAt: string
-  updatedAt: string
-  data: FormValues
-}
 
 // Constants for localStorage
 const AUTO_SAVE_KEY = 'journal-form-draft'
@@ -100,7 +94,12 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
       if (savedData) {
         const parsed = JSON.parse(savedData)
         if (Array.isArray(parsed)) {
-          return parsed
+          // Convert string dates back to Date objects
+          return parsed.map(entry => ({
+            ...entry,
+            createdAt: new Date(entry.createdAt),
+            updatedAt: new Date(entry.updatedAt)
+          }))
         }
       }
     } catch (error) {
@@ -167,14 +166,24 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
 
     const journalData: JournalData = {
       id: nanoid(),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
       data: data,
     }
 
     // Save journal data to localStorage
     saveJournalData(journalData)
     console.log('Journal data saved:', journalData)
+
+    // Reset form after successful submission
+    const currentForm = externalForm || form
+    currentForm.reset({
+      mistakes: '',
+      triggers: '',
+      effects: '',
+      three_months: '',
+      tomorrow_steps: '',
+    })
   }
 
   const handleSubmit = (externalForm || form).handleSubmit(onSubmit)

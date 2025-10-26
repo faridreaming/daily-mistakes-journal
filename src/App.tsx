@@ -1,6 +1,7 @@
+import JournalForm from '@/components/JournalForm'
 import JournalFormAccordion from '@/components/JournalFormAccordion'
+import JournalList from '@/components/JournalList'
 import { Alert, AlertDescription } from '@/components/ui/alert'
-import { Button } from './components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,11 +10,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import JournalForm from '@/components/JournalForm'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { readOnlyFormFields } from '@/data/readOnlyFormFields.data'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { BookOpenIcon } from 'lucide-react'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { Button } from './components/ui/button'
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
       </Alert>
 
       <JournalFormAccordion />
+      <JournalList />
     </div>
   )
 }
