@@ -7,6 +7,7 @@ import { useEffect, useCallback, useRef } from 'react'
 import type { JournalData } from '@/types/journalData.types'
 
 const formSchema = z.object({
+  date: z.date(),
   mistakes: z.string().trim().nonempty('Mistakes are required'),
   triggers: z.string().trim().nonempty('Triggers are required'),
   effects: z.string().trim().nonempty('Effects are required'),
@@ -35,6 +36,7 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
         // Validate the restored data structure
         if (parsed && typeof parsed === 'object') {
           return {
+            date: parsed.date || new Date(),
             mistakes: parsed.mistakes || '',
             triggers: parsed.triggers || '',
             effects: parsed.effects || '',
@@ -98,7 +100,11 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
           return parsed.map(entry => ({
             ...entry,
             createdAt: new Date(entry.createdAt),
-            updatedAt: new Date(entry.updatedAt)
+            updatedAt: new Date(entry.updatedAt),
+            data: {
+              ...entry.data,
+              date: new Date(entry.data.date)
+            }
           }))
         }
       }
@@ -125,6 +131,7 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: restoredData || {
+      date: new Date(),
       mistakes: '',
       triggers: '',
       effects: '',
@@ -178,6 +185,7 @@ export function useJournalForm(externalForm?: UseFormReturn<FormValues>, isReadO
     // Reset form after successful submission
     const currentForm = externalForm || form
     currentForm.reset({
+      date: new Date(),
       mistakes: '',
       triggers: '',
       effects: '',

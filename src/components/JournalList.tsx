@@ -20,23 +20,26 @@ function JournalList() {
       {journalEntries.map((entry) => (
         <div key={entry.id} className="border p-4 mb-4 rounded-lg">
           <h3 className="font-bold text-lg mb-2">
-            {entry.createdAt.toLocaleDateString('en-US', {
+            {entry.data.date?.toLocaleDateString('en-US', {
               year: 'numeric',
               month: 'long',
               day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
+            }) || 'No date'}
           </h3>
           <div className="space-y-2">
-            {formFields.map((field) => (
-              <div key={field.name}>
-                <h4 className="font-semibold">{field.label}</h4>
-                <p className="text-gray-500 mb-4 whitespace-pre-wrap text-sm">
-                  {entry.data[field.name as keyof FormValues]}
-                </p>
-              </div>
-            ))}
+            {formFields
+              .filter((field) => field.type !== 'date')
+              .map((field) => {
+                const value = entry.data[field.name as keyof FormValues]
+                return (
+                  <div key={field.name}>
+                    <h4 className="font-semibold">{field.label}</h4>
+                    <p className="text-gray-500 mb-4 whitespace-pre-wrap text-sm">
+                      {String(value || '')}
+                    </p>
+                  </div>
+                )
+              })}
           </div>
         </div>
       ))}

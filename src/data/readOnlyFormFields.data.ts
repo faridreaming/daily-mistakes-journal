@@ -2,6 +2,14 @@ import type { FormField } from '@/types/formFields.types'
 
 export const readOnlyFormFields: FormField[] = [
   {
+    type: 'date',
+    name: 'date',
+    label: 'Date',
+    description: 'Pick today’s date to record your daily reflection entry.',
+    value: '2025-01-01',
+  },
+  {
+    type: 'textarea',
     name: 'mistakes',
     label: 'Today’s Mistakes',
     description:
@@ -10,6 +18,7 @@ export const readOnlyFormFields: FormField[] = [
       '1. Checked my phone during study time.\n2. Ate junk food late at night.',
   },
   {
+    type: 'textarea',
     name: 'triggers',
     label: 'Triggers & Root Causes',
     description:
@@ -18,6 +27,7 @@ export const readOnlyFormFields: FormField[] = [
       "1. Got bored while studying and wanted quick dopamine.\n2. Felt stressed and thought, 'I deserve a snack.'",
   },
   {
+    type: 'textarea',
     name: 'effects',
     label: 'Impact on My Day',
     description:
@@ -26,6 +36,7 @@ export const readOnlyFormFields: FormField[] = [
       '1. Lost 45 minutes of focus and felt guilty after scrolling.\n2. Slept late and woke up tired in the morning.',
   },
   {
+    type: 'textarea',
     name: 'three_months',
     label: 'If This Continues for 3 Months…',
     description:
@@ -34,6 +45,7 @@ export const readOnlyFormFields: FormField[] = [
       'My productivity will drop, my sleep cycle will worsen, and I’ll feel stuck in the same loop.',
   },
   {
+    type: 'textarea',
     name: 'tomorrow_steps',
     label: 'Plan for Tomorrow (Prevention Steps)',
     description:
